@@ -32,14 +32,15 @@ export class AppComponent {
       salary: this.newForm.value.salary,
       age: '25' // As we are using dummy post API, this field is required.Hence, passing a dummy value
     }
-    this.apiService.saveData(req).subscribe((res: any) => {
-      if (res) {
+    this.apiService.saveData(req).subscribe({
+      next: (res: any) => {
         this.showSpinner = false;
         this.message = res.message + ' The id = ' + res.data.id;
+      },
+      error: (e) => {
+        this.showSpinner = false;
+        this.message = 'Error occured from API';
       }
-    }, error => {
-      this.showSpinner = false;
-      this.message = 'Error occured from API';
     })
   }
 }
